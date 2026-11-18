@@ -1,0 +1,475 @@
+<!doctype html>
+<!-- Mockup: the overlap report, arXiv Check. One page; each view is a URL parameter.
+       (none)                     two IDs: a new version sent as a new paper by the same authors
+       ?view=fraud                two IDs: the same paper sent by other people, with words swapped
+       ?view=form                 before a comparison
+       ?view=error                the form sent back with an error
+       ?view=three-ids            three IDs: three pairs, one after another
+     Internal tools. Every paper, person and address on this page is made up. -->
+<html lang="en" class="ds-internal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2607.93842v2 and submit/9104582, 97.2% overlap — Overlap report — arXiv Check</title>
+  <link rel="stylesheet" href="https://arxiv.github.io/design-system/docs/fonts.css">
+  <link rel="stylesheet" href="https://arxiv.github.io/design-system/docs/design-system.css">
+  <link rel="stylesheet" href="https://arxiv.github.io/design-system/docs/internal-tools.css">
+  <link rel="stylesheet" href="overlap.css">
+  <script src="https://arxiv.github.io/design-system/docs/theme.js"></script>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="ds-page">
+<a class="ds-skip-link" href="#main">Skip to main content</a>
+
+<header class="ds-site-header">
+  <a href="index.html" class="ds-site-header-logo">
+    <img src="https://arxiv.github.io/design-system/docs/assets/images/logos/logo_arxiv-check-light.svg" alt="archive Check">
+  </a>
+  <!-- Mockup: the search field shows placement and styling only. Its label names what it searches. -->
+  <form class="ds-site-header-search" role="search" action="#">
+    <label class="is-sr-only" for="search-check">Search arXiv Check</label>
+    <input class="ds-input" type="search" id="search-check" name="q" placeholder="Search">
+  </form>
+  <!-- Mockup: each menu holds a placeholder; the live tool's links go in them. -->
+  <nav class="ds-site-header-nav" aria-label="arXiv Check">
+    <details class="ds-site-header-dropdown">
+      <summary>Resources</summary>
+      <div class="ds-site-header-menu">
+        <a href="#">Placeholder: fill in with the current links</a>
+      </div>
+    </details>
+    <details class="ds-site-header-dropdown">
+      <summary>Submission</summary>
+      <div class="ds-site-header-menu">
+        <a href="#">Placeholder: fill in with the current links</a>
+      </div>
+    </details>
+    <details class="ds-site-header-dropdown">
+      <summary>User Support</summary>
+      <div class="ds-site-header-menu">
+        <a href="#">Placeholder: fill in with the current links</a>
+      </div>
+    </details>
+    <details class="ds-site-header-dropdown">
+      <summary>Students</summary>
+      <div class="ds-site-header-menu">
+        <a href="#">Placeholder: fill in with the current links</a>
+      </div>
+    </details>
+  </nav>
+  <div class="ds-site-header-tools">
+    <button type="button" class="ds-theme-toggle"></button>
+    <span id="ds-theme-status" class="is-sr-only" role="status"></span>
+  </div>
+  <span class="ds-site-header-divider" aria-hidden="true"></span>
+  <div class="ds-site-header-account ds-site-header-account--compact">
+    <details class="ds-site-header-dropdown">
+      <summary class="ds-site-header-login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+        <span class="is-sr-only">Account, signed in as Mei</span>
+      </summary>
+      <div class="ds-site-header-menu">
+        <p>Signed in as <b>Mei</b></p>
+        <a href="#">Your account</a>
+        <form method="post" action="#">
+          <button type="submit">Log out</button>
+        </form>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main" class="ds-container">
+  <h1>Overlap report</h1>
+  <form data-view-part class="ds-form--compact" id="compare-form" method="get" action="report.html" aria-label="Compare papers">
+    <div class="ds-input-group">
+      <label class="is-sr-only" for="cmp-1">First ID</label>
+      <input class="ds-input" id="cmp-1" name="id" type="text" value="2607.93842v2" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-2">Second ID</label>
+      <input class="ds-input" id="cmp-2" name="id" type="text" value="submit/9104582" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="ds-btn ds-btn-primary" type="submit">Compare</button>
+    <p class="ds-hint" id="cmp-hint">Enter arXiv IDs, such as 2607.93842v2, or submission IDs, such as submit/9104582.</p>
+    <button class="ds-btn ds-btn-text ds-btn-compact" type="submit" name="add" value="1" formnovalidate><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add another ID</button>
+    <a href="#about">About overlap reports</a>
+  </form>
+  <section data-view-part aria-labelledby="pair-h">
+    <h2 id="pair-h">2607.93842v2 and submit/9104582</h2>
+    <div class="ds-alert ds-alert--warning">
+      <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="ds-alert-content">
+        <p class="ds-alert-title">Warning message will display here</p>
+      </div>
+    </div>
+    <div class="ds-table-scroll" role="region" aria-label="The two papers, 2607.93842v2 and submit/9104582" tabindex="0">
+    <table class="ds-table">
+      <tbody>
+        <tr><td></td><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9104582">submit/9104582</a></th></tr>
+        <tr><th scope="row">Overlap</th><td><strong>97.2%</strong> of its words are in submit/9104582</td><td><strong>60.1%</strong> of its words are in 2607.93842v2</td></tr>
+        <tr><th scope="row">Status</th><td>Announced. Version 2 of 2.</td><td>Submission. On hold.</td></tr>
+        <tr><th scope="row">Submitted</th><td>v1 <time datetime="2026-07-14">14 Jul 2026</time> · v2 <time datetime="2026-08-03">3 Aug 2026</time></td><td><time datetime="2026-11-02">2 Nov 2026</time></td></tr>
+        <tr><th scope="row">Title</th><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</td><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock: Field Validation and Uncertainty</td></tr>
+        <tr><th scope="row">Authors</th><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura, Maren Aaltonen</td></tr>
+        <tr><th scope="row">Authors in common</th><td colspan="2">4: Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td></tr>
+        <tr><th scope="row">Submitter</th><td><a href="#user">Ines Valdecasas</a></td><td><a href="#user">Tomasz Wierzchowski</a></td></tr>
+        <tr><th scope="row">Categories</th><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The percentages include the references, so two papers that cite the same work share some text.</p>
+    <section>
+      <h3>Text compared</h3>
+      <p>Key: <mark>matched in the same place</mark>, <mark class="match-elsewhere">matched elsewhere in the other paper</mark>, not matched.</p>
+      <div class="ds-table-scroll" role="region" aria-label="The text of 2607.93842v2 and submit/9104582, side by side" tabindex="0">
+        <table class="ds-table overlap-text">
+          <tbody>
+          <tr><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9104582">submit/9104582</a></th></tr>
+          <tr><td><mark>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</mark></td><td><mark>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</mark>: Field Validation and Uncertainty</td></tr>
+          <tr><td><mark>Ines Valdecasas1, Tomasz Wierzchowski1, Adaeze Nwosu2, Haruto Kimura1†</mark></td><td><mark>Ines Valdecasas1</mark>*,<mark> Tomasz Wierzchowski1</mark>*,<mark> Adaeze Nwosu2, Haruto Kimura1†</mark>, Maren Aaltonen3</td></tr>
+          <tr><td><mark>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</mark></td><td><mark>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</mark> 3 Geological Survey of Vesterland</td></tr>
+          <tr><td><mark>Abstract Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks</mark>,<mark> the surrogate reproduces solver results with a median relative error of </mark>2.1%<mark> while running about 400 times faster.</mark></td><td><mark>Abstract Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks</mark> and validated against pumping tests at two field sites,<mark> the surrogate reproduces solver results with a median relative error of </mark>1.8%<mark> while running about 400 times faster.</mark> A deep ensemble estimates the surrogate&#x27;s own uncertainty, and its 90% intervals cover 93% of field observations.</td></tr>
+          <tr><td><mark>The source code</mark> will be released on publication.</td><td><mark>The source code</mark> is available at https://example.org/gns-flow.</td></tr>
+          <tr><td><mark>1. Introduction Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</mark></td><td><mark>1. Introduction Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</mark></td></tr>
+          <tr><td><mark>† Corresponding author: i.valdecasas@lindmark.example</mark></td><td>* These authors contributed equally. <mark>† Corresponding author: i.valdecasas@lindmark.example</mark></td></tr>
+          <tr><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network [3, 5]. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network [3, 5]. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td></tr>
+          <tr><td><mark>Surrogate models trained on solver output can reduce this cost. Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</mark></td><td><mark>Surrogate models trained on solver output can reduce this cost. Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</mark></td></tr>
+          <tr><td></td><td>This paper extends our earlier results [9] in three ways. We test the surrogate against pumping tests at two field sites, we add an<span id="tail-1" class="ds-show-more-tail"> estimate of its uncertainty, and we study how its error grows with the size of the network. Sections 2 and 3.1 repeat the method and the synthetic results of [9] so that the paper can be read on its own; Sections 2.2, 3.2 and 4 are new.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-1" data-open-label="show less" hidden>show 47 more words</button></td></tr>
+          <tr><td><mark>2. Method We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect. Node features are the fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres. A message-passing network with six layers maps these features to the hydraulic head on each fracture.</mark></td><td><mark>2. Method We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect. Node features are the fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres. A message-passing network with six layers maps these features to the hydraulic head on each fracture.</mark></td></tr>
+          <tr><td><mark>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</mark></td><td><mark>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</mark></td></tr>
+          <tr><td></td><td>2.2 Uncertainty We train an ensemble of five networks from different random initialisations and take the spread of their predictions as an estimate of<span id="tail-2" class="ds-show-more-tail"> uncertainty [10]. Each member sees the same training data in a different order. At prediction time the ensemble mean is the estimate and the ensemble standard deviation is its uncertainty. We report 90% intervals as the mean plus or minus 1.645 standard deviations, and we check their coverage on both the synthetic test set and the field data.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-2" data-open-label="show less" hidden>show 58 more words</button></td></tr>
+          <tr><td><mark>3. Results</mark><mark> On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is </mark>2.1%<mark>, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</mark></td><td><mark>3. Results</mark> 3.1 Synthetic networks<mark> On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is </mark>1.8%<mark>, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</mark></td></tr>
+          <tr><td></td><td>3.2 Field validation We compare the surrogate with pumping tests at two sites in fractured granite, Hallby and Korsnäs, where fracture statistics come from<span id="tail-3" class="ds-show-more-tail"> borehole logs and outcrop mapping. At Hallby the surrogate&#x27;s predicted drawdown is within 0.4 m of the observed drawdown in 11 of 12 observation wells. At Korsnäs, where the fracture data are sparser, it is within 0.4 m in 7 of 10 wells. The ensemble&#x27;s 90% intervals contain 93% of the observations across both sites.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-3" data-open-label="show less" hidden>show 55 more words</button></td></tr>
+          <tr><td></td><td>4. Discussion <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures, and both limits apply to the solver used for training as well.</mark> Errors also grow with the size of the network: the median error rises from 1.8% for networks of 500 fractures to 3.4% for networks of 5,000, because information has to pass through more of the graph than six layers can reach.</td></tr>
+          <tr><td>4. <mark>Conclusion Graph neural surrogates make DFN uncertainty studies affordable: a study that took a week of solver time takes under an hour.</mark></td><td>5. <mark>Conclusion Graph neural surrogates make DFN uncertainty studies affordable: a study that took a week of solver time takes under an hour.</mark> Field validation at two sites shows that this speed does not come at the cost of accuracy on real fracture networks, and the ensemble shows when a prediction should not be trusted.</td></tr>
+          <tr><td><mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures, and both limits apply to the solver used for training as well.</mark></td><td></td></tr>
+          <tr><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark></td><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark> [9] I. Valdecasas, T. Wierzchowski, A. Nwosu, and H. Kimura. Graph neural surrogates for groundwater flow in fractured rock. arXiv:2607.93842, 2026. [10] A. Holmberg and O. Adebayo. Ensemble spread as a measure of surrogate error. Journal of Computational Physics, 468:111–129, 2022.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <div class="ds-full ds-zone-secondary">
+    <section aria-labelledby="about">
+      <h2 id="about">About overlap reports</h2>
+      <p>An overlap report compares the words of two papers or submissions, including their references. With more than two IDs, it compares every pair.</p>
+      <h3>The percentages</h3>
+      <p>Each percentage is the number of matching words divided by the number of words in that paper. When the two papers are of very different lengths, the two percentages are very different: a short paper can be almost entirely inside a long one.</p>
+      <p>The references count too, so a percentage can be higher than the overlap that matters. Read the text to rule out overlap in the references and in standard phrases.</p>
+      <h3>The policy thresholds</h3>
+      <p>The policy thresholds will display here.</p>
+      <p>The most common reason for overlap is a revision sent as a new paper. <a href="#">When arXiv prefers a new version to a new submission</a></p>
+      <h3>The key</h3>
+      <ul>
+        <li><mark>Matched in the same place</mark>: the words are at the same place in both papers.</li>
+        <li><mark class="match-elsewhere">Matched elsewhere</mark>: the words are in the other paper, at a different place.</li>
+        <li>Not matched: the words are only in this paper.</li>
+      </ul>
+      <p>A long passage that is only in one paper is shortened. Select its show more button to read all of it.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="ds-site-footer">
+  <div class="ds-site-footer-grid">
+    <div class="ds-site-footer-main">
+      <div class="ds-site-footer-ack">
+        We gratefully acknowledge support from our <a href="https://info.arxiv.org/about/major_funders.html"><strong>major funders</strong></a>,
+        <a href="https://info.arxiv.org/about/ourmembers.html"><strong>member institutions</strong></a>,
+        and all contributors.
+      </div>
+      <nav class="ds-site-footer-links" aria-label="Site navigation">
+        <a href="https://info.arxiv.org/about">About</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help">Help</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/contact.html">Contact</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/subscribe.html">Subscribe</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/license/index.html">Copyright</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/policies/privacy_policy.html">Privacy</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/web_accessibility.html">Accessibility</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://status.arxiv.org/" target="_blank" rel="noopener noreferrer">Operational Status<span class="is-sr-only"> (opens in new tab)</span></a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<template id="view-form" data-title="Overlap report — arXiv Check">
+  <form class="ds-form--compact" id="compare-form" method="get" action="report.html" aria-label="Compare papers">
+    <div class="ds-input-group">
+      <label class="is-sr-only" for="cmp-1">First ID</label>
+      <input class="ds-input" id="cmp-1" name="id" type="text" value="" placeholder="2607.93842" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-2">Second ID</label>
+      <input class="ds-input" id="cmp-2" name="id" type="text" value="" placeholder="submit/9104582" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="ds-btn ds-btn-primary" type="submit">Compare</button>
+    <p class="ds-hint" id="cmp-hint">Enter arXiv IDs, such as 2607.93842v2, or submission IDs, such as submit/9104582.</p>
+    <button class="ds-btn ds-btn-text ds-btn-compact" type="submit" name="add" value="1" formnovalidate><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add another ID</button>
+    <a href="#about">About overlap reports</a>
+  </form>
+</template>
+
+<template id="view-error" data-title="Error: the second ID is not valid — Overlap report — arXiv Check">
+  <form class="ds-form--compact" id="compare-form" method="get" action="report.html" aria-label="Compare papers">
+    <div class="ds-input-group">
+      <label class="is-sr-only" for="cmp-1">First ID</label>
+      <input class="ds-input" id="cmp-1" name="id" type="text" value="2607.93842v2" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-2">Second ID</label>
+      <input class="ds-input is-invalid" id="cmp-2" name="id" type="text" value="9104582" required aria-required="true" aria-invalid="true" aria-describedby="cmp-hint cmp-error" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="ds-btn ds-btn-primary" type="submit">Compare</button>
+    <p class="field-error" id="cmp-error">The second ID, 9104582, is not an arXiv ID or a submission ID. Enter a submission ID with its prefix, such as submit/9104582.</p>
+    <p class="ds-hint" id="cmp-hint">Enter arXiv IDs, such as 2607.93842v2, or submission IDs, such as submit/9104582.</p>
+    <button class="ds-btn ds-btn-text ds-btn-compact" type="submit" name="add" value="1" formnovalidate><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add another ID</button>
+    <a href="#about">About overlap reports</a>
+  </form>
+</template>
+
+<template id="view-fraud" data-title="2607.93842v2 and submit/9108815, 91.4% overlap — Overlap report — arXiv Check">
+  <form class="ds-form--compact" id="compare-form" method="get" action="report.html" aria-label="Compare papers">
+    <div class="ds-input-group">
+      <label class="is-sr-only" for="cmp-1">First ID</label>
+      <input class="ds-input" id="cmp-1" name="id" type="text" value="2607.93842v2" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-2">Second ID</label>
+      <input class="ds-input" id="cmp-2" name="id" type="text" value="submit/9108815" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="ds-btn ds-btn-primary" type="submit">Compare</button>
+    <p class="ds-hint" id="cmp-hint">Enter arXiv IDs, such as 2607.93842v2, or submission IDs, such as submit/9104582.</p>
+    <button class="ds-btn ds-btn-text ds-btn-compact" type="submit" name="add" value="1" formnovalidate><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add another ID</button>
+    <a href="#about">About overlap reports</a>
+  </form>
+  <section aria-labelledby="pair-h">
+    <h2 id="pair-h">2607.93842v2 and submit/9108815</h2>
+    <!-- A deliberate exception to DESIGN-POLICIES, chosen by Shamsi on 2026-11-16 to demo to the dev team:
+         this alert is red, although red is kept for an error or a withdrawn or removed paper. Most of the
+         text with none of the authors fits the emotional logic of red. The words state facts, not fraud. -->
+    <div class="ds-alert ds-alert--error">
+      <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16h.01"/><path d="M12 8v4"/><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/></svg>
+      <div class="ds-alert-content">
+        <p class="ds-alert-title">Error message will display here</p>
+      </div>
+    </div>
+    <div class="ds-table-scroll" role="region" aria-label="The two papers, 2607.93842v2 and submit/9108815" tabindex="0">
+    <table class="ds-table">
+      <tbody>
+        <tr><td></td><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9108815">submit/9108815</a></th></tr>
+        <tr><th scope="row">Overlap</th><td><strong>91.4%</strong> of its words are in submit/9108815</td><td><strong>90.8%</strong> of its words are in 2607.93842v2</td></tr>
+        <tr><th scope="row">Status</th><td>Announced. Version 2 of 2.</td><td>Submission. On hold.</td></tr>
+        <tr><th scope="row">Submitted</th><td>v1 <time datetime="2026-07-14">14 Jul 2026</time> · v2 <time datetime="2026-08-03">3 Aug 2026</time></td><td><time datetime="2026-11-09">9 Nov 2026</time></td></tr>
+        <tr><th scope="row">Title</th><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</td><td>Graph-Based Neural Substitute Models for Groundwater Flow in Cracked Rock</td></tr>
+        <tr><th scope="row">Authors</th><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td><td>Marcus Whitfield, Lena Hartmann</td></tr>
+        <tr><th scope="row">Authors in common</th><td colspan="2">None</td></tr>
+        <tr><th scope="row">Submitter</th><td><a href="#user">Ines Valdecasas</a></td><td><a href="#user">Marcus Whitfield</a></td></tr>
+        <tr><th scope="row">Categories</th><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">cs.LG</span></li><li><span class="ds-tag ds-tag--keep-case">physics.geo-ph</span></li></ul></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The percentages include the references, so two papers that cite the same work share some text.</p>
+    <section>
+      <h3>Text compared</h3>
+      <p>Key: <mark>matched in the same place</mark>, <mark class="match-elsewhere">matched elsewhere in the other paper</mark>, not matched.</p>
+      <div class="ds-table-scroll" role="region" aria-label="The text of 2607.93842v2 and submit/9108815, side by side" tabindex="0">
+        <table class="ds-table overlap-text">
+          <tbody>
+          <tr><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9108815">submit/9108815</a></th></tr>
+          <tr><td>Graph<mark> Neural</mark> Surrogates<mark> for Groundwater Flow in</mark> Fractured<mark> Rock</mark></td><td>Graph-Based<mark> Neural</mark> Substitute Models<mark> for Groundwater Flow in</mark> Cracked<mark> Rock</mark></td></tr>
+          <tr><td>Ines Valdecasas1, Tomasz Wierzchowski1, Adaeze Nwosu2, Haruto Kimura1†</td><td>Marcus Whitfield1†, Lena Hartmann1</td></tr>
+          <tr><td>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</td><td>1 Institute for Applied Hydroinformatics, Brenton</td></tr>
+          <tr><td><mark>Abstract Simulating groundwater flow through</mark> fractured<mark> rock requires resolving thousands of</mark> fractures<mark> whose geometry is known only statistically. Discrete</mark> fracture<mark> network solvers are</mark> accurate but slow,<mark> which limits their use in</mark> uncertainty<mark> studies that need many runs. We present a graph neural network</mark> surrogate<mark> that treats each</mark> fracture<mark> as a node and each intersection as an edge, and learns to predict hydraulic head from</mark> fracture<mark> geometry and boundary conditions. Trained on 12,000 synthetic networks, the</mark> surrogate<mark> reproduces solver results with a median relative error of 2.1% while running about 400 times</mark> faster.</td><td><mark>Abstract Simulating groundwater flow through</mark> cracked<mark> rock requires resolving thousands of</mark> cracks<mark> whose geometry is known only statistically. Discrete</mark> crack<mark> network solvers are</mark> precise but moderate,<mark> which limits their use in</mark> vulnerability<mark> studies that need many runs. We present a graph neural network</mark> substitute<mark> that treats each</mark> crack<mark> as a node and each intersection as an edge, and learns to predict hydraulic head from</mark> crack<mark> geometry and boundary conditions. Trained on 12,000 synthetic networks, the</mark> substitute<mark> reproduces solver results with a median relative error of 2.1% while running about 400 times</mark> quicker.</td></tr>
+          <tr><td><mark>The source code</mark> will be released on publication.</td><td><mark>The source code</mark> is available from the authors on request.</td></tr>
+          <tr><td><mark>1. Introduction</mark> Fractured<mark> crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected</mark> fractures<mark>, so predicting it requires a model of the</mark> fracture<mark> network rather than of the rock mass as a whole [2].</mark></td><td><mark>1. Introduction</mark> Cracked<mark> crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected</mark> cracks<mark>, so predicting it requires a model of the</mark> crack<mark> network rather than of the rock mass as a whole [2].</mark></td></tr>
+          <tr><td>† Corresponding author: i.valdecasas@lindmark.example</td><td>† Corresponding author: m.whitfield@brenton.example</td></tr>
+          <tr><td><mark>Discrete</mark> fracture<mark> network</mark> (DFN)<mark> models represent each</mark> fracture<mark> explicitly and solve for flow on the resulting network [3, 5]. Because the</mark> fracture<mark> geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td><td><mark>Discrete</mark> crack<mark> network</mark> (DCN)<mark> models represent each</mark> crack<mark> explicitly and solve for flow on the resulting network [3, 5]. Because the</mark> crack<mark> geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td></tr>
+          <tr><td>Surrogate<mark> models trained on solver output can reduce this cost. Earlier</mark> surrogates<mark> used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of</mark> fractures<mark>. Graph neural networks avoid this loss, because the graph is the</mark> fracture<mark> network itself [8].</mark></td><td>Substitute<mark> models trained on solver output can reduce this cost. Earlier</mark> substitutes<mark> used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of</mark> cracks<mark>. Graph neural networks avoid this loss, because the graph is the</mark> crack<mark> network itself [8].</mark></td></tr>
+          <tr><td><mark>2. Method We represent a</mark> fracture<mark> network as a graph G = (V, E), where each node is a</mark> fracture<mark> and each edge joins two</mark> fractures<mark> that intersect. Node features are the</mark> fracture&#x27;s<mark> area, aperture and orientation; edge features are the length of the intersection and the distance between</mark> fracture<mark> centres. A message-passing network with six layers maps these features to the hydraulic head on each</mark> fracture.</td><td><mark>2. Method We represent a</mark> crack<mark> network as a graph G = (V, E), where each node is a</mark> crack<mark> and each edge joins two</mark> cracks<mark> that intersect. Node features are the</mark> crack&#x27;s<mark> area, aperture and orientation; edge features are the length of the intersection and the distance between</mark> crack<mark> centres. A message-passing network with six layers maps these features to the hydraulic head on each</mark> crack.</td></tr>
+          <tr><td><mark>Figure 1. A</mark> fracture<mark> network and its graph. Each</mark> fracture<mark> becomes a node, and each intersection between two</mark> fractures<mark> becomes an edge. Colours show hydraulic head from the solver (left) and from the</mark> surrogate<mark> (right).</mark></td><td><mark>Figure 1. A</mark> crack<mark> network and its graph. Each</mark> crack<mark> becomes a node, and each intersection between two</mark> cracks<mark> becomes an edge. Colours show hydraulic head from the solver (left) and from the</mark> substitute<mark> (right).</mark></td></tr>
+          <tr><td><mark>3. Results On a held-out set of 1,500 networks, the</mark> surrogate&#x27;s<mark> median relative error in hydraulic head is 2.1%, and its error exceeds 10% on fewer than 3% of</mark> fractures.<mark> Errors concentrate on</mark> fractures<mark> with a single intersection, where little information reaches the node.</mark></td><td><mark>3. Results On a held-out set of 1,500 networks, the</mark> substitute&#x27;s<mark> median relative error in hydraulic head is 2.1%, and its error exceeds 10% on fewer than 3% of</mark> cracks.<mark> Errors concentrate on</mark> cracks<mark> with a single intersection, where little information reaches the node.</mark></td></tr>
+          <tr><td><mark>4. Conclusion Graph neural</mark> surrogates<mark> make</mark> DFN uncertainty<mark> studies affordable: a study that took a week of solver time takes under an hour.</mark></td><td><mark>4. Conclusion Graph neural</mark> substitutes<mark> make</mark> DCN vulnerability<mark> studies affordable: a study that took a week of solver time takes under an hour.</mark></td></tr>
+          <tr><td><mark>The</mark> surrogate<mark> assumes that</mark> fractures<mark> are planar and that flow obeys the cubic law. Neither holds for rough or partly filled</mark> fractures<mark>, and both limits apply to the solver used for training as well.</mark></td><td><mark>The</mark> substitute<mark> assumes that</mark> cracks<mark> are planar and that flow obeys the cubic law. Neither holds for rough or partly filled</mark> cracks<mark>, and both limits apply to the solver used for training as well.</mark></td></tr>
+          <tr><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark></td><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</template>
+
+<template id="view-three-ids" data-title="3 pairs, highest 97.2% overlap — Overlap report — arXiv Check">
+  <form class="ds-form--compact" id="compare-form" method="get" action="report.html" aria-label="Compare papers">
+    <div class="ds-input-group">
+      <label class="is-sr-only" for="cmp-1">First ID</label>
+      <input class="ds-input" id="cmp-1" name="id" type="text" value="2607.93842v2" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-2">Second ID</label>
+      <input class="ds-input" id="cmp-2" name="id" type="text" value="submit/9104582" required aria-required="true" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+      <label class="is-sr-only" for="cmp-3">Third ID</label>
+      <input class="ds-input" id="cmp-3" name="id" type="text" value="submit/9106233" aria-describedby="cmp-hint" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="ds-btn ds-btn-primary" type="submit">Compare</button>
+    <p class="ds-hint" id="cmp-hint">Enter arXiv IDs, such as 2607.93842v2, or submission IDs, such as submit/9104582.</p>
+    <button class="ds-btn ds-btn-text ds-btn-compact" type="submit" name="add" value="1" formnovalidate><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add another ID</button>
+    <a href="#about">About overlap reports</a>
+  </form>
+  <section aria-labelledby="pair-h-1">
+    <h2 id="pair-h-1">2607.93842v2 and submit/9104582</h2>
+    <div class="ds-alert ds-alert--warning">
+      <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="ds-alert-content">
+        <p class="ds-alert-title">Warning message will display here</p>
+      </div>
+    </div>
+    <div class="ds-table-scroll" role="region" aria-label="The two papers, 2607.93842v2 and submit/9104582" tabindex="0">
+    <table class="ds-table">
+      <tbody>
+        <tr><td></td><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9104582">submit/9104582</a></th></tr>
+        <tr><th scope="row">Overlap</th><td><strong>97.2%</strong> of its words are in submit/9104582</td><td><strong>60.1%</strong> of its words are in 2607.93842v2</td></tr>
+        <tr><th scope="row">Status</th><td>Announced. Version 2 of 2.</td><td>Submission. On hold.</td></tr>
+        <tr><th scope="row">Submitted</th><td>v1 <time datetime="2026-07-14">14 Jul 2026</time> · v2 <time datetime="2026-08-03">3 Aug 2026</time></td><td><time datetime="2026-11-02">2 Nov 2026</time></td></tr>
+        <tr><th scope="row">Title</th><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</td><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock: Field Validation and Uncertainty</td></tr>
+        <tr><th scope="row">Authors</th><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura, Maren Aaltonen</td></tr>
+        <tr><th scope="row">Authors in common</th><td colspan="2">4: Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td></tr>
+        <tr><th scope="row">Submitter</th><td><a href="#user">Ines Valdecasas</a></td><td><a href="#user">Tomasz Wierzchowski</a></td></tr>
+        <tr><th scope="row">Categories</th><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The percentages include the references, so two papers that cite the same work share some text.</p>
+    <section>
+      <h3>Text compared</h3>
+      <p>Key: <mark>matched in the same place</mark>, <mark class="match-elsewhere">matched elsewhere in the other paper</mark>, not matched.</p>
+      <div class="ds-table-scroll" role="region" aria-label="The text of 2607.93842v2 and submit/9104582, side by side" tabindex="0">
+        <table class="ds-table overlap-text">
+          <tbody>
+          <tr><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9104582">submit/9104582</a></th></tr>
+          <tr><td><mark>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</mark></td><td><mark>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</mark>: Field Validation and Uncertainty</td></tr>
+          <tr><td><mark>Ines Valdecasas1, Tomasz Wierzchowski1, Adaeze Nwosu2, Haruto Kimura1†</mark></td><td><mark>Ines Valdecasas1</mark>*,<mark> Tomasz Wierzchowski1</mark>*,<mark> Adaeze Nwosu2, Haruto Kimura1†</mark>, Maren Aaltonen3</td></tr>
+          <tr><td><mark>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</mark></td><td><mark>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</mark> 3 Geological Survey of Vesterland</td></tr>
+          <tr><td><mark>Abstract Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks</mark>,<mark> the surrogate reproduces solver results with a median relative error of </mark>2.1%<mark> while running about 400 times faster.</mark></td><td><mark>Abstract Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks</mark> and validated against pumping tests at two field sites,<mark> the surrogate reproduces solver results with a median relative error of </mark>1.8%<mark> while running about 400 times faster.</mark> A deep ensemble estimates the surrogate&#x27;s own uncertainty, and its 90% intervals cover 93% of field observations.</td></tr>
+          <tr><td><mark>The source code</mark> will be released on publication.</td><td><mark>The source code</mark> is available at https://example.org/gns-flow.</td></tr>
+          <tr><td><mark>1. Introduction Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</mark></td><td><mark>1. Introduction Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</mark></td></tr>
+          <tr><td><mark>† Corresponding author: i.valdecasas@lindmark.example</mark></td><td>* These authors contributed equally. <mark>† Corresponding author: i.valdecasas@lindmark.example</mark></td></tr>
+          <tr><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network [3, 5]. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network [3, 5]. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor [6].</mark></td></tr>
+          <tr><td><mark>Surrogate models trained on solver output can reduce this cost. Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</mark></td><td><mark>Surrogate models trained on solver output can reduce this cost. Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</mark></td></tr>
+          <tr><td></td><td>This paper extends our earlier results [9] in three ways. We test the surrogate against pumping tests at two field sites, we add an<span id="tail-4" class="ds-show-more-tail"> estimate of its uncertainty, and we study how its error grows with the size of the network. Sections 2 and 3.1 repeat the method and the synthetic results of [9] so that the paper can be read on its own; Sections 2.2, 3.2 and 4 are new.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-4" data-open-label="show less" hidden>show 47 more words</button></td></tr>
+          <tr><td><mark>2. Method We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect. Node features are the fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres. A message-passing network with six layers maps these features to the hydraulic head on each fracture.</mark></td><td><mark>2. Method We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect. Node features are the fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres. A message-passing network with six layers maps these features to the hydraulic head on each fracture.</mark></td></tr>
+          <tr><td><mark>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</mark></td><td><mark>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</mark></td></tr>
+          <tr><td></td><td>2.2 Uncertainty We train an ensemble of five networks from different random initialisations and take the spread of their predictions as an estimate of<span id="tail-5" class="ds-show-more-tail"> uncertainty [10]. Each member sees the same training data in a different order. At prediction time the ensemble mean is the estimate and the ensemble standard deviation is its uncertainty. We report 90% intervals as the mean plus or minus 1.645 standard deviations, and we check their coverage on both the synthetic test set and the field data.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-5" data-open-label="show less" hidden>show 58 more words</button></td></tr>
+          <tr><td><mark>3. Results</mark><mark> On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is </mark>2.1%<mark>, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</mark></td><td><mark>3. Results</mark> 3.1 Synthetic networks<mark> On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is </mark>1.8%<mark>, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</mark></td></tr>
+          <tr><td></td><td>3.2 Field validation We compare the surrogate with pumping tests at two sites in fractured granite, Hallby and Korsnäs, where fracture statistics come from<span id="tail-6" class="ds-show-more-tail"> borehole logs and outcrop mapping. At Hallby the surrogate&#x27;s predicted drawdown is within 0.4 m of the observed drawdown in 11 of 12 observation wells. At Korsnäs, where the fracture data are sparser, it is within 0.4 m in 7 of 10 wells. The ensemble&#x27;s 90% intervals contain 93% of the observations across both sites.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-6" data-open-label="show less" hidden>show 55 more words</button></td></tr>
+          <tr><td></td><td>4. Discussion <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures, and both limits apply to the solver used for training as well.</mark> Errors also grow with the size of the network: the median error rises from 1.8% for networks of 500 fractures to 3.4% for networks of 5,000, because information has to pass through more of the graph than six layers can reach.</td></tr>
+          <tr><td>4. <mark>Conclusion Graph neural surrogates make DFN uncertainty studies affordable: a study that took a week of solver time takes under an hour.</mark></td><td>5. <mark>Conclusion Graph neural surrogates make DFN uncertainty studies affordable: a study that took a week of solver time takes under an hour.</mark> Field validation at two sites shows that this speed does not come at the cost of accuracy on real fracture networks, and the ensemble shows when a prediction should not be trusted.</td></tr>
+          <tr><td><mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures, and both limits apply to the solver used for training as well.</mark></td><td></td></tr>
+          <tr><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark></td><td><mark>References [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3] B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020. [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5] L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020. [6] D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021. [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</mark> [9] I. Valdecasas, T. Wierzchowski, A. Nwosu, and H. Kimura. Graph neural surrogates for groundwater flow in fractured rock. arXiv:2607.93842, 2026. [10] A. Holmberg and O. Adebayo. Ensemble spread as a measure of surrogate error. Journal of Computational Physics, 468:111–129, 2022.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+  <section aria-labelledby="pair-h-2">
+    <h2 id="pair-h-2">2607.93842v2 and submit/9106233</h2>
+    <div class="ds-alert ds-alert--warning">
+      <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <div class="ds-alert-content">
+        <p class="ds-alert-title">Warning message will display here</p>
+      </div>
+    </div>
+    <div class="ds-table-scroll" role="region" aria-label="The two papers, 2607.93842v2 and submit/9106233" tabindex="0">
+    <table class="ds-table">
+      <tbody>
+        <tr><td></td><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9106233">submit/9106233</a></th></tr>
+        <tr><th scope="row">Overlap</th><td><strong>24.9%</strong> of its words are in submit/9106233</td><td><strong>31.2%</strong> of its words are in 2607.93842v2</td></tr>
+        <tr><th scope="row">Status</th><td>Announced. Version 2 of 2.</td><td>Submission. On hold.</td></tr>
+        <tr><th scope="row">Submitted</th><td>v1 <time datetime="2026-07-14">14 Jul 2026</time> · v2 <time datetime="2026-08-03">3 Aug 2026</time></td><td><time datetime="2026-11-05">5 Nov 2026</time></td></tr>
+        <tr><th scope="row">Title</th><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</td><td>Message-Passing Networks for Permeability Estimation in Karst Aquifers</td></tr>
+        <tr><th scope="row">Authors</th><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura</td><td>Lior Ben-Ami, Sofia Marchetti</td></tr>
+        <tr><th scope="row">Authors in common</th><td colspan="2">None</td></tr>
+        <tr><th scope="row">Submitter</th><td><a href="#user">Ines Valdecasas</a></td><td><a href="#user">Lior Ben-Ami</a></td></tr>
+        <tr><th scope="row">Categories</th><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">physics.flu-dyn</span></li></ul></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The percentages include the references, so two papers that cite the same work share some text.</p>
+    <section>
+      <h3>Text compared</h3>
+      <p>Key: <mark>matched in the same place</mark>, <mark class="match-elsewhere">matched elsewhere in the other paper</mark>, not matched.</p>
+      <div class="ds-table-scroll" role="region" aria-label="The text of 2607.93842v2 and submit/9106233, side by side" tabindex="0">
+        <table class="ds-table overlap-text">
+          <tbody>
+          <tr><th scope="col"><a href="#paper-2607.93842">2607.93842v2</a></th><th scope="col"><a href="#submission-9106233">submit/9106233</a></th></tr>
+          <tr><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock</td><td>Message-Passing Networks for Permeability Estimation in Karst Aquifers</td></tr>
+          <tr><td>Ines Valdecasas1, Tomasz Wierzchowski1, Adaeze Nwosu2, Haruto Kimura1†</td><td>Lior Ben-Ami1*, Sofia Marchetti1</td></tr>
+          <tr><td>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology</td><td>1 School of Environmental Engineering, Calder Bay University</td></tr>
+          <tr><td><mark>Abstract</mark> Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but<span id="tail-7" class="ds-show-more-tail"> slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks, the surrogate reproduces solver results with a median relative error of 2.1% while running about 400 times faster.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-7" data-open-label="show less" hidden>show 67 more words</button></td><td><mark>Abstract</mark> Karst aquifers supply drinking water to about a quarter of the world&#x27;s population, but their permeability is hard to measure because flow follows dissolved<span id="tail-8" class="ds-show-more-tail"> conduits that boreholes rarely intersect. We estimate permeability from tracer breakthrough curves with a message-passing network on a graph of conduits built from cave surveys. On three aquifers in the Calder Basin the estimates agree with pumping-test values to within a factor of two, at a fraction of the cost of inverse modelling.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-8" data-open-label="show less" hidden>show 53 more words</button></td></tr>
+          <tr><td>The source code will be released on publication.</td><td></td></tr>
+          <tr><td><mark>1. Introduction</mark> Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in<span id="tail-9" class="ds-show-more-tail"> such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-9" data-open-label="show less" hidden>show 31 more words</button></td><td><mark>1. Introduction</mark> Karst aquifers are among the most productive and the most vulnerable groundwater systems [1]. Their permeability spans many orders of magnitude over short distances, and conventional pumping tests sample only the part of the aquifer near the well [2].</td></tr>
+          <tr><td>† Corresponding author: i.valdecasas@lindmark.example</td><td>* Corresponding author: l.benami@calderbay.example</td></tr>
+          <tr><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network</mark> [3, 5]<mark>. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor</mark> [6]<mark>.</mark></td><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network</mark> [4, 6]<mark>. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor</mark> [7]<mark>.</mark></td></tr>
+          <tr><td><mark>Surrogate models trained on solver output can reduce this cost.</mark> Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</td><td><mark>Surrogate models trained on solver output can reduce this cost.</mark> For karst, the solver is a pipe-network model of the conduits, and a surrogate must respect the same topology [8]. <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>Graph neural surrogates make</mark> permeability<mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span> studies affordable: a study that took a week of solver time takes under an hour.</mark></td></tr>
+          <tr><td><mark>2. Method</mark> We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect.<mark> Node features are the</mark> fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres.<mark> A message-passing network with six layers maps these features to the</mark> hydraulic head on each fracture.</td><td><mark>2. Method</mark> We build a graph from the cave survey: each conduit segment is a node and each junction is an edge.<mark> Node features are the</mark> segment&#x27;s length, mean diameter and depth.<mark> A message-passing network with six layers maps these features to the</mark> log-permeability of each segment, trained on 8,000 synthetic aquifers.</td></tr>
+          <tr><td>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</td><td>Figure 1. The conduit graph of the Ardel cave system, coloured by estimated log-permeability.</td></tr>
+          <tr><td><mark>3. Results</mark> On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is 2.1%, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</td><td><mark>3. Results</mark> Across the three aquifers, the estimates agree with pumping-test permeability to within a factor of two at 14 of 16 wells. The two exceptions lie in the epikarst, where flow is diffuse and the conduit graph does not apply.</td></tr>
+          <tr><td>4. Conclusion <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>Graph neural surrogates make</mark> DFN uncertainty<mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span> studies affordable: a study that took a week of solver time takes under an hour.</mark> The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures, and both limits apply to the solver used for training as well.</td><td>4. Conclusion Tracer data and a cave survey are enough to estimate the permeability of a karst aquifer without a full inverse model. The method assumes laminar flow in each conduit, which fails during floods.</td></tr>
+          <tr><td><mark>References</mark> [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3]<mark> B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020.</mark> [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5]<mark> L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020.</mark> [6]<mark> D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021.</mark> [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023.</td><td><mark>References</mark> [1] P. Albergaria. Karst hydrogeology and water supply. Environmental Earth Sciences, 80:412, 2021. [2] H. Saltvedt and N. Vlachos. Scale effects in karst permeability. Groundwater, 59(3):344–356, 2021. [3] E. Szymczyk. Tracer tests in conduit-dominated aquifers. Journal of Hydrology, 601:126–139, 2021. [4]<mark> B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020.</mark> [5] S. Okonkwo and Y. Seo. Pipe-network models of cave systems. Water Resources Research, 56(9), 2020. [6]<mark> L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020.</mark> [7]<mark> D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021.</mark> [8] F. Quiroga-Lenz. Topology-aware surrogates for flow in networks. Computational Geosciences, 26:1201–1219, 2022.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+  <section aria-labelledby="pair-h-3">
+    <h2 id="pair-h-3">submit/9104582 and submit/9106233</h2>
+    <div class="ds-alert">
+      <svg class="ds-alert-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <div class="ds-alert-content">
+        <p class="ds-alert-title">Info message will display here</p>
+      </div>
+    </div>
+    <div class="ds-table-scroll" role="region" aria-label="The two papers, submit/9104582 and submit/9106233" tabindex="0">
+    <table class="ds-table">
+      <tbody>
+        <tr><td></td><th scope="col"><a href="#submission-9104582">submit/9104582</a></th><th scope="col"><a href="#submission-9106233">submit/9106233</a></th></tr>
+        <tr><th scope="row">Overlap</th><td><strong>16.4%</strong> of its words are in submit/9106233</td><td><strong>27.6%</strong> of its words are in submit/9104582</td></tr>
+        <tr><th scope="row">Status</th><td>Submission. On hold.</td><td>Submission. On hold.</td></tr>
+        <tr><th scope="row">Submitted</th><td><time datetime="2026-11-02">2 Nov 2026</time></td><td><time datetime="2026-11-05">5 Nov 2026</time></td></tr>
+        <tr><th scope="row">Title</th><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock: Field Validation and Uncertainty</td><td>Message-Passing Networks for Permeability Estimation in Karst Aquifers</td></tr>
+        <tr><th scope="row">Authors</th><td>Ines Valdecasas, Tomasz Wierzchowski, Adaeze Nwosu, Haruto Kimura, Maren Aaltonen</td><td>Lior Ben-Ami, Sofia Marchetti</td></tr>
+        <tr><th scope="row">Authors in common</th><td colspan="2">None</td></tr>
+        <tr><th scope="row">Submitter</th><td><a href="#user">Tomasz Wierzchowski</a></td><td><a href="#user">Lior Ben-Ami</a></td></tr>
+        <tr><th scope="row">Categories</th><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">cs.LG</span></li></ul></td><td><ul class="ds-tag-list" aria-label="Categories, primary first"><li><span class="ds-tag ds-tag--keep-case ds-tag--info">physics.geo-ph</span></li><li><span class="ds-tag ds-tag--keep-case">physics.flu-dyn</span></li></ul></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The percentages include the references, so two papers that cite the same work share some text.</p>
+    <section>
+      <h3>Text compared</h3>
+      <p>Key: <mark>matched in the same place</mark>, <mark class="match-elsewhere">matched elsewhere in the other paper</mark>, not matched.</p>
+      <div class="ds-table-scroll" role="region" aria-label="The text of submit/9104582 and submit/9106233, side by side" tabindex="0">
+        <table class="ds-table overlap-text">
+          <tbody>
+          <tr><th scope="col"><a href="#submission-9104582">submit/9104582</a></th><th scope="col"><a href="#submission-9106233">submit/9106233</a></th></tr>
+          <tr><td>Graph Neural Surrogates for Groundwater Flow in Fractured Rock: Field Validation and Uncertainty</td><td>Message-Passing Networks for Permeability Estimation in Karst Aquifers</td></tr>
+          <tr><td>Ines Valdecasas1*, Tomasz Wierzchowski1*, Adaeze Nwosu2, Haruto Kimura1†, Maren Aaltonen3</td><td>Lior Ben-Ami1*, Sofia Marchetti1</td></tr>
+          <tr><td>1 Department of Earth Sciences, University of Lindmark 2 Northfield Institute of Technology 3 Geological Survey of Vesterland</td><td>1 School of Environmental Engineering, Calder Bay University</td></tr>
+          <tr><td><mark>Abstract</mark> Simulating groundwater flow through fractured rock requires resolving thousands of fractures whose geometry is known only statistically. Discrete fracture network solvers are accurate but<span id="tail-10" class="ds-show-more-tail"> slow, which limits their use in uncertainty studies that need many runs. We present a graph neural network surrogate that treats each fracture as a node and each intersection as an edge, and learns to predict hydraulic head from fracture geometry and boundary conditions. Trained on 12,000 synthetic networks and validated against pumping tests at two field sites, the surrogate reproduces solver results with a median relative error of 1.8% while running about 400 times faster.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-10" data-open-label="show less" hidden>show 76 more words</button></td><td><mark>Abstract</mark> Karst aquifers supply drinking water to about a quarter of the world&#x27;s population, but their permeability is hard to measure because flow follows dissolved<span id="tail-11" class="ds-show-more-tail"> conduits that boreholes rarely intersect. We estimate permeability from tracer breakthrough curves with a message-passing network on a graph of conduits built from cave surveys. On three aquifers in the Calder Basin the estimates agree with pumping-test values to within a factor of two, at a fraction of the cost of inverse modelling.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-11" data-open-label="show less" hidden>show 53 more words</button></td></tr>
+          <tr><td>The source code is available at https://example.org/gns-flow.</td><td></td></tr>
+          <tr><td><mark>1. Introduction</mark> Fractured crystalline rock hosts water supplies for millions of people and is under study as a host for geological repositories [1, 4]. Flow in<span id="tail-12" class="ds-show-more-tail"> such rock is dominated by a small number of connected fractures, so predicting it requires a model of the fracture network rather than of the rock mass as a whole [2].</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-12" data-open-label="show less" hidden>show 31 more words</button></td><td><mark>1. Introduction</mark> Karst aquifers are among the most productive and the most vulnerable groundwater systems [1]. Their permeability spans many orders of magnitude over short distances, and conventional pumping tests sample only the part of the aquifer near the well [2].</td></tr>
+          <tr><td>* These authors contributed equally. † Corresponding author: i.valdecasas@lindmark.example</td><td>* Corresponding author: l.benami@calderbay.example</td></tr>
+          <tr><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network</mark> [3, 5]<mark>. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor</mark> [6]<mark>.</mark></td><td><mark>Discrete fracture network (DFN) models represent each fracture explicitly and solve for flow on the resulting network</mark> [4, 6]<mark>. Because the fracture geometry is uncertain, studies run the solver on hundreds or thousands of sampled networks, and the cost of each run becomes the limiting factor</mark> [7]<mark>.</mark></td></tr>
+          <tr><td><mark>Surrogate models trained on solver output can reduce this cost.</mark> Earlier surrogates used convolutional networks on voxelised permeability fields [7], which lose the thin, high-contrast structure of fractures. Graph neural networks avoid this loss, because the graph is the fracture network itself [8].</td><td><mark>Surrogate models trained on solver output can reduce this cost.</mark> For karst, the solver is a pipe-network model of the conduits, and a surrogate must respect the same topology [8]. <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>Graph neural surrogates make</mark> permeability<mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span> studies affordable: a study that took a week of solver time takes under an hour.</mark></td></tr>
+          <tr><td>This paper extends our earlier results [9] in three ways. We test the surrogate against pumping tests at two field sites, we add an<span id="tail-13" class="ds-show-more-tail"> estimate of its uncertainty, and we study how its error grows with the size of the network. Sections 2 and 3.1 repeat the method and the synthetic results of [9] so that the paper can be read on its own; Sections 2.2, 3.2 and 4 are new.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-13" data-open-label="show less" hidden>show 47 more words</button></td><td></td></tr>
+          <tr><td><mark>2. Method</mark> We represent a fracture network as a graph G = (V, E), where each node is a fracture and each edge joins two fractures that intersect.<mark> Node features are the</mark> fracture&#x27;s area, aperture and orientation; edge features are the length of the intersection and the distance between fracture centres.<mark> A message-passing network with six layers maps these features to the</mark> hydraulic head on each fracture.</td><td><mark>2. Method</mark> We build a graph from the cave survey: each conduit segment is a node and each junction is an edge.<mark> Node features are the</mark> segment&#x27;s length, mean diameter and depth.<mark> A message-passing network with six layers maps these features to the</mark> log-permeability of each segment, trained on 8,000 synthetic aquifers.</td></tr>
+          <tr><td>Figure 1. A fracture network and its graph. Each fracture becomes a node, and each intersection between two fractures becomes an edge. Colours show hydraulic head from the solver (left) and from the surrogate (right).</td><td>Figure 1. The conduit graph of the Ardel cave system, coloured by estimated log-permeability.</td></tr>
+          <tr><td>2.2 Uncertainty We train an ensemble of five networks from different random initialisations and take the spread of their predictions as an estimate of<span id="tail-14" class="ds-show-more-tail"> uncertainty [10]. Each member sees the same training data in a different order. At prediction time the ensemble mean is the estimate and the ensemble standard deviation is its uncertainty. We report 90% intervals as the mean plus or minus 1.645 standard deviations, and we check their coverage on both the synthetic test set and the field data.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-14" data-open-label="show less" hidden>show 58 more words</button></td><td></td></tr>
+          <tr><td><mark>3. Results</mark> 3.1 Synthetic networks On a held-out set of 1,500 networks, the surrogate&#x27;s median relative error in hydraulic head is 1.8%, and its error exceeds 10% on fewer than 3% of fractures. Errors concentrate on fractures with a single intersection, where little information reaches the node.</td><td><mark>3. Results</mark> Across the three aquifers, the estimates agree with pumping-test permeability to within a factor of two at 14 of 16 wells. The two exceptions lie in the epikarst, where flow is diffuse and the conduit graph does not apply.</td></tr>
+          <tr><td>3.2 Field validation We compare the surrogate with pumping tests at two sites in fractured granite, Hallby and Korsnäs, where fracture statistics come from<span id="tail-15" class="ds-show-more-tail"> borehole logs and outcrop mapping. At Hallby the surrogate&#x27;s predicted drawdown is within 0.4 m of the observed drawdown in 11 of 12 observation wells. At Korsnäs, where the fracture data are sparser, it is within 0.4 m in 7 of 10 wells. The ensemble&#x27;s 90% intervals contain 93% of the observations across both sites.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-15" data-open-label="show less" hidden>show 55 more words</button></td><td></td></tr>
+          <tr><td>4. Discussion The surrogate assumes that fractures are planar and that flow obeys the cubic law. Neither holds for rough or partly filled fractures,<span id="tail-16" class="ds-show-more-tail"> and both limits apply to the solver used for training as well. Errors also grow with the size of the network: the median error rises from 1.8% for networks of 500 fractures to 3.4% for networks of 5,000, because information has to pass through more of the graph than six layers can reach.</span> <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="tail-16" data-open-label="show less" hidden>show 53 more words</button></td><td></td></tr>
+          <tr><td>5. Conclusion <mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span>Graph neural surrogates make</mark> DFN uncertainty<mark class="match-elsewhere"><span class="is-sr-only">Matched elsewhere: </span> studies affordable: a study that took a week of solver time takes under an hour.</mark> Field validation at two sites shows that this speed does not come at the cost of accuracy on real fracture networks, and the ensemble shows when a prediction should not be trusted.</td><td>4. Conclusion Tracer data and a cave survey are enough to estimate the permeability of a karst aquifer without a full inverse model. The method assumes laminar flow in each conduit, which fails during floods.</td></tr>
+          <tr><td><mark>References</mark> [1] M. Lindqvist and L. Okafor. Groundwater in crystalline bedrock: a review. Hydrogeology Journal, 29:1–22, 2021. [2] P. Iriarte, J. Brekke, and K. Morikawa. Channelised flow in sparse fracture networks. Water Resources Research, 57(4), 2021. [3]<mark> B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020.</mark> [4] T. Haddad. Site characterisation for deep geological disposal. Geological Society Special Publications, 482:33–51, 2019. [5]<mark> L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020.</mark> [6]<mark> D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021.</mark> [7] M.-L. Chou and E. Tanrıverdi. Convolutional surrogates for subsurface flow. Water Resources Research, 58(2), 2022. [8] P. Deshmukh, F. Aubert, and C. Weissmann. Graph networks for physical simulation on meshes. In Proceedings of the International Conference on Learning Representations, 2023. [9] I. Valdecasas, T. Wierzchowski, A. Nwosu, and H. Kimura. Graph neural surrogates for groundwater flow in fractured rock. arXiv:2607.93842, 2026. [10] A. Holmberg and O. Adebayo. Ensemble spread as a measure of surrogate error. Journal of Computational Physics, 468:111–129, 2022.</td><td><mark>References</mark> [1] P. Albergaria. Karst hydrogeology and water supply. Environmental Earth Sciences, 80:412, 2021. [2] H. Saltvedt and N. Vlachos. Scale effects in karst permeability. Groundwater, 59(3):344–356, 2021. [3] E. Szymczyk. Tracer tests in conduit-dominated aquifers. Journal of Hydrology, 601:126–139, 2021. [4]<mark> B. Carrigou and L. Fischer. Discrete fracture network modelling at repository scale. Journal of Hydrology, 590:125–140, 2020.</mark> [5] S. Okonkwo and Y. Seo. Pipe-network models of cave systems. Water Resources Research, 56(9), 2020. [6]<mark> L. Bettencourt, A. Osei, and R. Natarajan. Mixed hybrid finite elements for fracture flow. Computational Geosciences, 24:877–893, 2020.</mark> [7]<mark> D. Volkonsky and R. Quintero. Cost of uncertainty quantification in fractured media. Advances in Water Resources, 151:103–118, 2021.</mark> [8] F. Quiroga-Lenz. Topology-aware surrogates for flow in networks. Computational Geosciences, 26:1201–1219, 2022.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</template>
+
+<script src="overlap.js"></script>
+<script src="https://arxiv.github.io/design-system/docs/show-more.js" defer></script>
+<script src="https://arxiv.github.io/design-system/docs/header.js" defer></script>
+</body>
+</html>

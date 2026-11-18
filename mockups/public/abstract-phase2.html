@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abstract page redesign — arXiv mockup</title>
+
+<!--
+╔════════════════════════════════════════════════════════════════════╗
+║  ABSTRACT PAGE REDESIGN — arXiv public-facing paper abstract page  ║
+╚════════════════════════════════════════════════════════════════════╝
+
+  WHAT THIS IS
+    A design mockup. The purpose is to communicate visual, behavioral,
+    and accessibility intent to developers and AI assistants implementing
+    across arXiv's heterogeneous codebase (Flask/Jinja, React, PHP, Perl,
+    static HTML). It is not production code; do not ship it verbatim.
+
+  HOW TO READ THIS FILE
+    Every component block in CSS, HTML, and JS carries a comment header
+    explaining its purpose, the user research / accessibility priority it
+    implements, and any tradeoffs we made. The HTML/CSS/JS are
+    implementation HINTS, not prescriptions. The same component can be
+    re-implemented in any tech stack as long as the user-visible behavior
+    and accessibility commitments are preserved.
+
+  RELATED REFERENCE DOCS
+    The design system repository:
+      DESIGN-POLICIES.md                                non-negotiable rules
+      docs/typography.html                     font stack
+      docs/color-mapping.md                  palette + tokens
+      docs/public/accessibility-priorities.md  decisions + rationale
+    This repository:
+      planning/accessibility-priorities.md              decisions + rationale
+      research/accessibility-research-questions.md      open research questions
+
+  CROSS-CUTTING DECISIONS APPLIED HERE (see accessibility-priorities.md)
+    - HTML as the primary download (validated by 2024 HTML launch reactions)
+    - No third-party tool recommendations (we host the services already in
+      production Labs; we don't curate external lists)
+    - No author-uploaded audio/video abstracts (adoption-prediction)
+    - Capability advertisement, not compliance claim (present-only, no
+      "X is missing" indicators — "arXiv is not here to punish hard-working
+      researchers")
+    - Decisions over preferences: no per-site toggles for theme / font /
+      motion. Respect OS-level signals only.
+    - "archive" is the spoken form of "arXiv" — dual-span pattern wherever
+      the literal "arXiv" appears in user-facing chrome.
+
+  SAMPLE PAPER
+    An invented paper: Ferreyra et al. (2026), arXiv:2604.92725, an ID arXiv
+    cannot reach. Its title is long enough to wrap to three lines. 22 authors. Used throughout for
+    the example data; chosen because it stress-tests the author-truncation
+    pattern and the multi-line cite-info layout.
+-->
+
+<link rel="stylesheet" href="https://arxiv.github.io/design-system/docs/fonts.css">
+<link rel="stylesheet" href="https://arxiv.github.io/design-system/docs/design-system.css">
+
+<style>
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  PAGE STYLES                                                       ║
+╚════════════════════════════════════════════════════════════════════╝
+  Source of truth: docs/color-mapping.md
+  Naming: token-name : canonical-purpose
+
+  In production these become CSS custom properties scoped to the arXiv
+  design system (`--ds-*` per DESIGN-POLICIES.md). Here we inline
+  literal hex values to keep the mockup self-contained.
+*/
+
+:root {
+  /* Light-only while the dark pass is undesigned. Everything else — the
+     palette, the type stack, the spacing scale — comes from
+     design-system.css, linked above. This page used to declare 22 tokens of
+     its own, every one a copy of the canonical value. */
+  color-scheme: light;
+}
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  BASE / RESET                                                      ║
+╚════════════════════════════════════════════════════════════════════╝
+  Minimal baseline. No CSS reset library — fewer dependencies, easier to
+  audit. Box-sizing and explicit body defaults.
+*/
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* Type sizes are rem throughout (px equivalents in comments assume the
+   16px browser default). This is a hard requirement from
+   accessibility-priorities.md (cognitive/dyslexia track): "Use rem
+   units… The user's own browser/extension/OS choices should propagate
+   to arXiv content." A reader who sets their browser's base font size
+   to 20px gets a proportionally larger page; px-based type would
+   silently ignore that choice. Layout dimensions (padding, borders,
+   breakpoints) stay px — only type scales with user preference. */
+body {
+  font-family: var(--ds-font-sans);
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.5;
+  color: var(--ds-text);
+  background: #fff;
+}
+img { max-width: 100%; height: auto; }
+
+/* Focus-visible default. Specific components may override with their own
+   focus treatment (e.g., a button with a different outline color). */
+:focus-visible {
+  outline: 2px solid var(--ds-link);
+  outline-offset: 2px;
+}
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  UTILITY CLASSES                                                   ║
+╚════════════════════════════════════════════════════════════════════╝
+*/
+
+/* External-link icon. Inline SVG (Lucide-style "external-link") used at
+   the end of every link with target="_blank". Paired with sr-only text
+   "(opens in new tab)". Both are required by the priority list. */
+.external-icon {
+  width: 11px; height: 11px;
+  vertical-align: -1px;
+  margin-left: 4px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  COMPONENT: Universal header (arXiv chrome)                        ║
+╚════════════════════════════════════════════════════════════════════╝
+  Intent
+    The black bar at the top of every arXiv public page (post-Cornell
+    spinout). NOT sticky — it scrolls away like any other content. Contains the logo and primary nav.
+
+  Accessibility decisions (priorities.md: information architecture,
+                           arxiv→archive pronunciation)
+    - <header><nav aria-label="Main navigation"> is the landmark.
+    - Logo aria-label and image alt say "archive" (the spoken pronunciation
+      Ginsparg intended via Greek χ in "arXiv"). research
+      finding: screen readers without this hint say "ar-zhiv" / Roman
+      numeral "XIV" — gibberish.
+    - The search button opens a modal dialog (see search-overlay block);
+      Cmd+K also opens it.
+    - Decorative SVGs use aria-hidden + focusable="false" so SR doesn't
+      announce them; the visible text labels are the accessible names.
+    - Visible "About" link added so newcomers can self-orient (the
+      "What is arXiv?" priority — "I have no
+      clue what I am walking into").
+
+  Tradeoff
+    Header is Repository Brown (var(--ds-text)) — same as the design system's
+    background-dark token. Phase-2 spinout brand (post-June 2026). Black
+    in phase 1 was visually identical so no transition work needed.
+*/
+
+@media (max-width: 520px) {
+
+}
+
+/* Narrow-viewport reflow (WCAG 1.4.10). Without this block the nav overflows and forces horizontal
+   scrolling on the whole page at 320px (the 1.4.10 test width / 400%
+   zoom equivalent). The fix is the
+   simplest robust one: let the header wrap to a second row. No JS, no
+   hamburger, nothing hidden — every nav item stays visible and
+   reachable, which also keeps voice-control users (visible label =
+   accessible name) working. */
+@media (max-width: 520px) {
+
+}
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  COMPONENT: Search overlay (modal dialog)                          ║
+╚════════════════════════════════════════════════════════════════════╝
+  Intent
+    A modal search dialog launched from the header's Search button or
+    via Cmd+K / Ctrl+K. Single-input form with a hint and link to
+    Advanced Search.
+
+  Accessibility decisions
+    - role="dialog" + aria-modal="true" + aria-labelledby pointing at the
+      sr-only heading inside the panel.
+    - Focus trap (JS): Tab cycles within the dialog. Shift+Tab from first
+      focusable wraps to last and vice versa.
+    - Esc closes; click outside the panel closes.
+    - On open, focus moves into the search input. On close, focus returns
+      to the element that opened it (search button or wherever Cmd+K was
+      pressed).
+    - The visible "·" separator between hint and Advanced Search has
+      aria-hidden="true" so screen readers don't read "middot."
+
+  Research
+    Common UX pattern for command-K search (used by GitHub, Linear, etc.).
+    A familiar shape for technical users — most arXiv readers will
+    recognize it.
+*/
+
+.arxiv-search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(28, 26, 23, 0.3);
+  align-items: flex-start;
+  justify-content: center;
+}
+.arxiv-search-overlay.is-open { display: flex; }
+.arxiv-search-panel {
+  margin-top: 52px;
+  width: 100%;
+  max-width: 640px;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 20px 24px;
+}
+.arxiv-search-panel input[type="text"] {
+  width: 100%;
+  font-family: var(--ds-font-sans);
+  font-size: 1rem; /* 16px */
+  padding: 10px 14px;
+  border: 2px solid var(--ds-border);
+  border-radius: 6px;
+  outline: none;
+  color: var(--ds-text);
+  box-sizing: border-box;
+}
+.arxiv-search-panel input[type="text"]:focus {
+  border-color: var(--ds-link);
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+}
+.arxiv-search-panel input[type="text"]::placeholder { color: var(--ds-text-disabled); }
+.arxiv-search-hint {
+  font-family: var(--ds-font-sans);
+  font-size: 0.75rem; /* 12px */
+  color: var(--ds-text-muted);
+  margin-top: 8px;
+}
+.arxiv-search-hint a { font-size: 0.75rem; /* 12px */ }
+
+.abs-section-heading {
+  font-family: var(--ds-font-sans);
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  color: var(--ds-text);
+  letter-spacing: 0;
+  margin: 0;
+}
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  COMPONENT: Related section (Labs toggles)                         ║
+╚════════════════════════════════════════════════════════════════════╝
+  Intent
+    Optional integrations with third-party scholarly tools (arXiv Labs).
+    Two-column: toggle list on left, content area on right. User turns
+    on a toggle and the content card appears.
+
+  Why this exists despite our "no third-party tool recommendations" rule
+    These are the existing arXiv Labs integrations, already in production.
+    Each one was reviewed and judged on
+    function and value. We're not adding new recommendations; we're
+    presenting the established Labs surface. The Labs-info link explains
+    the program for new readers.
+
+  Accessibility decisions
+    - The section is <section aria-labelledby> with a real h2 "Related".
+    - Each toggle is a real <input type="checkbox"> wrapped in <label>;
+      the visual switch is purely cosmetic CSS. AT users get standard
+      checkbox semantics ("Connected Papers, checkbox, not checked").
+    - The toggle group has its own subheading ("Papers & Citations" etc.)
+      as a .ds-panel-label — these should ideally be real headings, but
+      the visual treatment in this mockup uses divs. Worth a follow-up.
+    - "What is this?" links open in new tabs with explicit external-icon
+      + sr-only "(opens in new tab)" notice.
+    - The empty state ("Toggle a tool on the left to see its content
+      here") is announced when no placeholder is visible.
+
+  Visual choice
+    Slightly darker band (var(--ds-tint-warm)) than the reference zone above it to
+    suggest a separate functional area. Two-column layout matches the
+    user's mental model: "switches on the left, things turn on / off
+    on the right." Many users will discover Labs by hitting a switch
+    and seeing what appears.
+*/
+
+.abs-related-section {
+  background: var(--ds-tint-warm);
+  padding: 32px 0 36px;
+}
+
+.abs-labs-layout {
+  display: flex;
+  gap: 24px;
+}
+.abs-labs-list {
+  flex: 0 0 auto;
+  min-width: 240px;
+}
+.abs-labs-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.abs-labs-group { margin-bottom: 16px; }
+.abs-labs-group:last-child { margin-bottom: 0; }
+.abs-labs-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+/* Visual switch (CSS only — the underlying input is a real checkbox) */
+.abs-labs-toggle {
+  position: relative;
+  display: inline-block;
+  width: 28px; height: 16px;
+  flex-shrink: 0;
+}
+.abs-labs-toggle input {
+  opacity: 0;
+  width: 0; height: 0;
+  position: absolute;
+}
+.abs-labs-track {
+  position: absolute;
+  inset: 0;
+  background: var(--ds-border);
+  border: 1px solid var(--ds-text-disabled);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+}
+.abs-labs-track::after {
+  content: '';
+  position: absolute;
+  top: 1px; left: 1px;
+  width: 12px; height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: transform 0.18s;
+}
+.abs-labs-toggle input:checked + .abs-labs-track {
+  background: var(--ds-accent);
+  border-color: #7eb8e0;
+}
+.abs-labs-toggle input:checked + .abs-labs-track::after {
+  transform: translateX(12px);
+}
+.abs-labs-toggle input:focus-visible + .abs-labs-track {
+  outline: 3px solid var(--ds-link);
+  outline-offset: 2px;
+}
+
+.abs-labs-name {
+  font-size: 0.8125rem; /* 13px */
+  color: var(--ds-text);
+}
+.abs-labs-name a {
+  font-size: 0.6875rem; /* 11px */
+  color: var(--ds-text-muted);
+  text-decoration: none;
+  margin-left: 4px;
+}
+.abs-labs-name a:hover { text-decoration: underline; }
+
+.abs-labs-placeholder {
+  display: none;
+  padding: 16px 18px;
+  background: var(--ds-canvas);
+  border: 1px dashed var(--ds-border);
+  border-radius: 4px;
+  font-size: 0.75rem; /* 12px */
+  color: var(--ds-text-muted);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.abs-labs-placeholder:last-child { margin-bottom: 0; }
+.abs-labs-placeholder.is-visible { display: block; }
+
+.abs-labs-empty {
+  padding: 24px 18px;
+  font-size: 0.8125rem; /* 13px */
+  /* --ds-text-muted, not --ds-text-disabled: this is real instructional text and must
+     meet 4.5:1. The disabled-grey ladder stop is for
+     disabled controls only, per color-mapping.md. */
+  color: var(--ds-text-muted);
+  font-style: italic;
+}
+
+.abs-labs-info {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.abs-labs-info a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem; /* 12px */
+  color: var(--ds-text-muted);
+  text-decoration: none;
+}
+.abs-labs-info a img { width: 14px; height: 14px; }
+.abs-labs-info a:hover { color: var(--ds-text); }
+
+@media (max-width: 700px) {
+  .abs-labs-layout { flex-direction: column; }
+  .abs-labs-list { min-width: 0; }
+}
+
+@media (max-width: 720px) {
+
+}
+
+html:not(.js) .abs-labs-toggle { display: none; }      /* Labs switches dead; names + info links still work */
+html:not(.js) .abs-labs-empty { display: none; }       /* "toggle a tool" prompt is meaningless without JS */
+
+/*
+╔════════════════════════════════════════════════════════════════════╗
+║  PRINT                                                             ║
+╚════════════════════════════════════════════════════════════════════╝
+  Strip interactive chrome for print: header, search overlay and Labs
+  stay OUT; the paper's identity, title, versions, authors, abstract
+  and sidebar stay IN.
+  External link URLs are expanded inline so a printout retains the
+  information a click would have reached (same convention as the HTML
+  reader's print block). Validates against the open feedback queue (print
+  obscured by chrome). */
+@media print {
+  /* The print block is the last thing in the stylesheet, so a plain
+     declaration already beats the screen rule it repeats: a media query adds
+     no specificity, and source order settles the tie. The one screen rule
+     that outranks a bare class here is
+     `.arxiv-search-overlay.is-open { display: flex }`, which is why the
+     overlay is named with its open class as well — someone can print while
+     the overlay is up. */
+  .ds-site-header,
+  .arxiv-search-overlay,
+  .arxiv-search-overlay.is-open,
+  .abs-related-section,
+  footer.ds-site-footer { display: none; }
+  body { background: #fff; color: #000; }
+
+  /* Link colours on the page come through class-level selectors, each of
+     which outranks a bare `a`. Flattening all of them to black for print
+     from one element selector is what !important is for, so it stays. */
+  a { color: #000 !important; }
+
+}
+
+
+/* 100+ authors: the open list is a bounded scrollable region, with a collapse
+   control at both ends (half-item peek: 9.5 line-heights cut the last line mid-way,
+   a "scroll for more" signal that survives forced colors and zoom). */
+.abs-authors-scroll.is-open {
+  display: block;
+  max-height: calc(9.5 * 1.5em);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 10px 0 4px;
+  padding: 10px 14px;
+  border: 1px solid var(--ds-border);
+  border-radius: 4px;
+  background: var(--ds-canvas);
+}
+.abs-authors-scroll > .ds-show-more { display: block; }
+</style>
+<script>
+  /* Progressive-enhancement marker — see the no-JS fallback CSS block.
+     Runs in <head> so there is no flash of pre-enhancement layout. */
+  document.documentElement.classList.add('js');
+</script>
+</head>
+
+<body class="ds-page">
+
+<!-- Skip link: visible only on focus. First focusable element on the page. -->
+<a class="ds-skip-link" href="#main">Skip to main content</a>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  UNIVERSAL HEADER
+═══════════════════════════════════════════════════════════════════════ Codified: the chrome below uses the design system's own
+  class names (.ds-announcement / .ds-site-header /
+  .ds-site-footer / .ds-skip-link). The canonical CSS lives in
+  docs/design-system.css; this mockup carries a
+  matching local copy only to stay self-contained for GitHub Pages
+  preview. If the two drift, design-system.css wins — update this file.
+
+  See .ds-site-header CSS block for intent and decisions.
+  Note: the "arXiv" wordmark inside the logo image is alt-text-replaced
+  with "archive" so screen readers say the intended pronunciation.
+-->
+
+<!-- Top announcement banner (dismissable). Matches the approved
+     spinout-header-footer treatment: light-blue band with the
+     smileybones glyph + "arXiv is now an independent nonprofit!"
+     copy + Learn-more link + close button. Static in this mockup;
+     in production the close button writes a cookie so the dismissal
+     persists. -->
+<div class="ds-announcement" role="region" aria-label="Announcement" id="announcement">
+  <span class="ds-announcement-text"><img class="ds-announcement-glyph" src="images/smileybones-small.svg" alt="">arXiv is now an independent nonprofit!</span>
+  <span class="ds-announcement-links"><a class="ds-announcement-link" href="https://info.arxiv.org/about/index.html">Learn more</a></span>
+  <button type="button" class="ds-close"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span class="is-sr-only">Dismiss announcement</span></button>
+</div>
+
+<header class="ds-site-header">
+  <a href="https://arxiv.org/" class="ds-site-header-logo" aria-label="archive home">
+    <img src="images/logo_arxiv-primary.svg" alt="archive">
+  </a>
+  <nav class="ds-site-header-nav" aria-label="Main navigation">
+    <!-- Search is an <a> upgraded by JS: with scripts running, click
+         opens the Cmd+K overlay (preventDefault); without scripts it
+         navigates to the search page. Never a dead control. -->
+    <a href="https://arxiv.org/search" id="search-toggle" aria-label="Search archive">
+      <svg class="ds-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Search
+    </a>
+    <a href="https://arxiv.org/submit">Submit</a>
+    <a href="https://info.arxiv.org/about/donate.html">Donate</a>
+    <span class="ds-site-header-divider" aria-hidden="true"></span>
+    <a href="https://arxiv.org/login" class="ds-site-header-login">Log in</a>
+  </nav>
+</header>
+
+<!-- NO breadcrumb bar: the approved spinout
+     treatment covers ONLY the announcement banner and the black header —
+     nothing below it. A breadcrumb iteration was tried and removed: at
+     2 levels deep it doesn't justify the real estate, and its links
+     (home, category listing) are available elsewhere on the page
+     (header logo; Subjects in the metadata block). -->
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  SEARCH OVERLAY (modal)
+═══════════════════════════════════════════════════════════════════════
+  Opened by the header Search button or Cmd+K / Ctrl+K. Focus trap and
+  return focus are wired in the JS at the bottom of the page.
+-->
+
+<div class="arxiv-search-overlay" id="search-overlay">
+  <div class="arxiv-search-panel" role="dialog" aria-modal="true" aria-labelledby="search-heading">
+    <h2 id="search-heading" class="is-sr-only">Search archive</h2>
+    <form method="GET" action="https://arxiv.org/search">
+      <label for="search-input" class="is-sr-only">Search query</label>
+      <input type="text" name="query" id="search-input" placeholder="Search papers by title, author, abstract, or ID...">
+      <input type="hidden" name="searchtype" value="all">
+    </form>
+    <div class="arxiv-search-hint">
+      Press Enter to search <span aria-hidden="true">&middot;</span>
+      <a href="https://arxiv.org/search/advanced">Advanced search</a>
+    </div>
+  </div>
+</div>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  MAIN
+═══════════════════════════════════════════════════════════════════════
+-->
+
+<main id="main" class="ds-container">
+  <p class="ds-paper-identity">
+  <span><span class="ds-version" aria-hidden="true">arXiv:2604.92725v1</span><span class="is-sr-only">archive paper, I D 2 6 0 4 dot 9 2 7 2 5, version 1</span></span>
+  <span>[gr-qc] General Relativity and Quantum Cosmology</span>
+  <a href="https://doi.org/10.48550/arXiv.2604.92725">doi:10.48550/arXiv.2604.92725</a>
+  <a href="https://creativecommons.org/licenses/by/4.0/">License: CC BY 4.0</a>
+</p>
+  <section aria-labelledby="paper-title">
+  <h1 id="paper-title" lang="en">Scalar perturbations and frame choice in higher-curvature inflation: gauge-invariant variables in the Einstein and Jordan frames</h1>
+  <p class="ds-date-row">
+  Submitted <time datetime="2026-04-09">9&nbsp;Apr&nbsp;2026</time>&nbsp;UTC (this version)
+  <span aria-hidden="true"> · </span><span class="is-sr-only">, </span>
+  Announced <time datetime="2026-04-10T00:00Z">10&nbsp;Apr&nbsp;2026,&nbsp;00:00</time>&nbsp;UTC
+  <span aria-hidden="true"> · </span><span class="is-sr-only">, </span><span class="ds-version-list">
+  <strong class="ds-version" aria-current="true">v1<span class="is-sr-only">, this version</span></strong>
+  <a class="ds-version" href="https://arxiv.org/abs/2604.92725v2">v2<span class="is-sr-only">, version 2</span></a>
+  </span>
+</p>
+  <div class="ds-alert ds-alert--warning">
+  <svg class="ds-alert-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+  <div class="ds-alert-content">
+    <p><strong>You are viewing version 1.</strong> A newer version is available — <a href="https://arxiv.org/abs/2604.92725v6">version 2, revised 28&nbsp;Jun&nbsp;2026</a>.</p>
+  </div>
+</div>
+  <p class="ds-link-list"><a href="#">Lucía Ferreyra</a>, <a href="#">Jonas Brekke</a>, <a href="#">Amara Osei</a>, <a href="#">Kenji Morikawa</a>, <a href="#">Priyanka Deshmukh</a>, <a href="#">Mateus Albuquerque</a>, <a href="#">Ingrid Solheim</a>, <a href="#">Tariq Haddad</a><span id="authors-overflow" class="ds-show-more-tail">, <a href="#">Yuna Seo</a>, <a href="#">Olumide Adebayo</a>, <a href="#">Clara Weissmann</a>, <a href="#">Rafael Quintero</a>, <a href="#">Anika Holmberg</a>, <a href="#">Dmitri Volkonsky</a>, <a href="#">Mei-Ling Chou</a>, <a href="#">Samuel Okonkwo</a>, <a href="#">Elif Tanrıverdi</a>, <a href="#">Bastien Carrigou</a>, <a href="#">Nadia Rahimi</a>, <a href="#">Tomasz Wrzosek</a>, <a href="#">Siobhán Gallagher</a>, <a href="#">Arjun Venkataraman</a></span> <button type="button" class="ds-show-more ds-show-more--among-links" id="authors-toggle" aria-expanded="false" aria-controls="authors-overflow" data-open-label="show fewer" hidden>show all 22 authors</button></p>
+  </section>
+  <div>
+    <div>
+      <h2 class="is-sr-only">Abstract</h2>
+      <p lang="en">We study scalar perturbations during inflation in gravity with quadratic curvature terms, and ask how much of their behavior depends on the choice of conformal frame. Working first in the Einstein frame, we write the equations of motion in terms of three sets of gauge-invariant variables, so that physical effects can be separated from artifacts of the coordinates. On superhorizon scales we find the leading-order behavior of each variable and follow it through several common gauges. One gauge shows an apparent growth of the metric perturbations; we show that the growth disappears in the other gauges and in every observable we compute, so it is not a sign of instability. We then repeat the analysis in the Jordan frame, show which variables carry over unchanged, and explain why results in the two frames agree once they are expressed in gauge-invariant form. The method applies to any higher-curvature model with a scalar degree of freedom.</p>
+    </div>
+    <aside class="ds-sidebar" aria-label="About this paper">
+  <section aria-labelledby="mg-files-h" id="mg-files">
+    <h2 class="ds-panel-label" id="mg-files-h">Files</h2>
+    <ul class="ds-paper-files">
+      <li><a class="ds-btn ds-btn-primary" href="html-phase1.html" aria-describedby="paper-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> HTML</a></li>
+      <li><a href="https://arxiv.org/pdf/2604.92725v1" target="_blank" rel="noopener" aria-describedby="paper-title">PDF<span class="is-sr-only"> (opens in a new tab)</span></a> <small>1.2&nbsp;MB</small></li>
+      <li><a href="https://arxiv.org/src/2604.92725v1" aria-describedby="paper-title">TeX Source</a> <small>.tar.gz · 286&nbsp;KB</small></li>
+      <li><a href="https://arxiv.org/format/2604.92725v1">Other formats</a></li>
+      <li>Ancillary files <small>· 3.6&nbsp;MB</small> <a href="https://arxiv.org/src/2604.92725v1/anc">Download all<span class="is-sr-only"> 3 ancillary files</span></a></li>
+    </ul>
+  </section>
+  <section aria-labelledby="mg-cite-h" class="ds-paper-cite" id="mg-cite">
+    <div class="ds-paper-cite-head">
+      <h2 class="ds-panel-label" id="mg-cite-h">Cite</h2>
+      <div class="ds-form--compact ds-paper-cite-tools">
+        <label class="is-sr-only" for="mg-cite-format">Citation format</label>
+        <select class="ds-input" id="mg-cite-format">
+          <option value="bibtex" selected>BibTeX</option>
+          <option value="apa">APA</option>
+          <option value="chicago">Chicago</option>
+          <option value="mla">MLA</option>
+        </select>
+      </div>
+    </div>
+    <div id="mg-cite-code" class="ds-paper-cite-code">
+      <figure data-format="bibtex">
+        <figcaption>BibTeX</figcaption>
+        <pre><code>@article{ferreyra2026scalar,
+  title = {Scalar perturbations and frame choice in higher-curvature inflation: gauge-invariant variables in the Einstein and Jordan frames},
+  author = {Ferreyra, Lucía and Brekke, Jonas and Osei, Amara and Morikawa, Kenji and Deshmukh, Priyanka and Albuquerque, Mateus and Solheim, Ingrid and Haddad, Tariq and Seo, Yuna and Adebayo, Olumide and Weissmann, Clara and Quintero, Rafael and Holmberg, Anika and Volkonsky, Dmitri and Chou, Mei-Ling and Okonkwo, Samuel and Tanrıverdi, Elif and Carrigou, Bastien and Rahimi, Nadia and Wrzosek, Tomasz and Gallagher, Siobhán and Venkataraman, Arjun},
+  journal = {arXiv preprint arXiv:2604.92725},
+  year = {2026},
+  doi = {10.48550/arXiv.2604.92725}
+}</code></pre>
+      </figure>
+      <figure data-format="apa">
+        <figcaption>APA</figcaption>
+        <pre><code>Ferreyra, L., Brekke, J., Osei, A., Morikawa, K., Deshmukh, P., Albuquerque, M., Solheim, I., Haddad, T., Seo, Y., Adebayo, O., Weissmann, C., Quintero, R., Holmberg, A., Volkonsky, D., Chou, M.-L., Okonkwo, S., Tanrıverdi, E., Carrigou, B., Rahimi, N., … Venkataraman, A. (2026). Scalar perturbations and frame choice in higher-curvature inflation: gauge-invariant variables in the Einstein and Jordan frames. arXiv. https://doi.org/10.48550/arXiv.2604.92725</code></pre>
+      </figure>
+      <figure data-format="chicago">
+        <figcaption>Chicago</figcaption>
+        <pre><code>Ferreyra, Lucía, Jonas Brekke, Amara Osei, Kenji Morikawa, Priyanka Deshmukh, Mateus Albuquerque, Ingrid Solheim, et al. 2026. “Scalar perturbations and frame choice in higher-curvature inflation: gauge-invariant variables in the Einstein and Jordan frames.” arXiv. https://doi.org/10.48550/arXiv.2604.92725.</code></pre>
+      </figure>
+      <figure data-format="mla">
+        <figcaption>MLA</figcaption>
+        <pre><code>Ferreyra, Lucía, et al. “Scalar perturbations and frame choice in higher-curvature inflation: gauge-invariant variables in the Einstein and Jordan frames.” arXiv, 2026, https://doi.org/10.48550/arXiv.2604.92725.</code></pre>
+      </figure>
+    </div>
+    <button type="button" class="ds-show-more" aria-expanded="false" aria-controls="mg-cite-code" hidden>Show full citation</button>
+  </section>
+  <section aria-labelledby="mg-info-h" id="mg-info">
+    <h2 class="ds-panel-label" id="mg-info-h">Paper information</h2>
+    <details class="ds-acc" name="paper-info" id="mg-versions">
+      <summary>Version history</summary>
+      <div class="ds-acc-body">
+        <ol class="ds-paper-versions">
+          <li>
+            <p class="ds-date-row"><a class="ds-version" href="https://arxiv.org/abs/2604.92725v2">v2<span class="is-sr-only">, version 2</span></a> · <time datetime="2026-06-28">28&nbsp;Jun&nbsp;2026</time>&nbsp;UTC · Latest</p>
+            <p>29 pages, 2 figures. Corrected a sign in Eq. (2.9); expanded the discussion of the Jordan frame. Matches the published version.</p>
+          </li>
+          <li aria-current="true">
+            <p class="ds-date-row"><strong class="ds-version">v1</strong> · <time datetime="2026-04-09">9&nbsp;Apr&nbsp;2026</time>&nbsp;UTC · Viewing</p>
+            <p>28 pages, 2 figures.</p>
+          </li>
+        </ol>
+      </div>
+    </details>
+    <details class="ds-acc" name="paper-info">
+      <summary>Accessibility</summary>
+      <div class="ds-acc-body">
+        <ul class="ds-paper-capabilities">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> HTML, PDF and TeX Source</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Structured math</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" stroke-dasharray="2.5 2.5"/></svg> Alt text on figures: missing. <a href="#">How to add it</a></li>
+        </ul>
+      </div>
+    </details>
+    <details class="ds-acc" name="paper-info">
+      <summary>Metadata</summary>
+      <div class="ds-acc-body">
+        <dl>
+          <dt>Subjects</dt><dd>General Relativity and Quantum Cosmology (<a href="https://arxiv.org/list/gr-qc/recent">gr-qc</a>); Cosmology and Nongalactic Astrophysics (<a href="https://arxiv.org/list/astro-ph.CO/recent">astro-ph.CO</a>); High Energy Physics — Theory (<a href="https://arxiv.org/list/hep-th/recent">hep-th</a>)</dd>
+          <dt>arXiv DOI</dt><dd><a href="https://doi.org/10.48550/arXiv.2604.92725">10.48550/arXiv.2604.92725</a></dd>
+          <dt>License</dt><dd><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></dd>
+          <dt>Journal</dt><dd><a href="https://doi.org/10.5555/jep.2026.412">Journal of Example Physics, 2026(10), 412</a></dd>
+          <dt>Comments</dt><dd>v2: 29 pages, 2 figures. Corrected a sign in Eq. (2.9); expanded the discussion of the Jordan frame. Matches the published version.</dd>
+          <dt>Who cites this</dt><dd class="mg-who-row"><a href="#">Google Scholar</a> <a href="#">NASA ADS</a> <a href="#">Semantic Scholar</a></dd>
+        </dl>
+      </div>
+    </details>
+  </section>
+</aside>
+  </div>
+  <div class="ds-full ds-zone-secondary">
+    <!-- ───────── Related section (Labs toggles) ───────── -->
+
+    <section class="abs-related-section" aria-labelledby="related-heading">
+      <h2 class="abs-section-heading" id="related-heading">Related</h2>
+      <div class="abs-labs-layout">
+
+        <!-- Toggle list -->
+        <div class="abs-labs-list">
+          <!-- Order within each group encodes the labs audit: frictionless,
+               working integrations first; degraded or login-walled
+               integrations last. DESIGN-POLICIES.md: "Labs that require
+               login should be deprioritized in placement." Group
+               membership is unchanged — only order within groups. -->
+          <div class="abs-labs-group">
+            <div class="ds-panel-label">Papers &amp; Citations</div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="connected-papers" aria-label="Connected Papers"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">Connected Papers <a href="https://www.connectedpapers.com/about" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="litmaps" aria-label="Litmaps"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">Litmaps <a href="https://www.litmaps.co/" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="core" aria-label="CORE Recommender"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">CORE Recommender <a href="https://core.ac.uk/services/recommender" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <!-- scite last in group: integration currently broken (DOI
+                 lookup failure — audit item 4). Restore position when fixed. -->
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="scite" aria-label="scite Smart Citations"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">scite Smart Citations <a href="https://www.scite.ai/" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+          </div>
+
+          <div class="abs-labs-group">
+            <div class="ds-panel-label">Code, Data &amp; Models</div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="catalyzex" aria-label="CatalyzeX Code Finder"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">CatalyzeX Code Finder <a href="https://www.catalyzex.com" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="huggingface" aria-label="Hugging Face"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">Hugging Face <a href="https://huggingface.co/huggingface" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="sciencecast" aria-label="ScienceCast"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">ScienceCast <a href="https://sciencecast.org/welcome" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <!-- alphaXiv last in group: requires login to interact. -->
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="alphaxiv" aria-label="alphaXiv"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">alphaXiv <a href="https://alphaxiv.org/" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+          </div>
+
+          <div class="abs-labs-group">
+            <div class="ds-panel-label">Demos</div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="replicate" aria-label="Replicate"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">Replicate <a href="https://replicate.com/docs/arxiv/about" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+            <div class="abs-labs-row">
+              <label class="abs-labs-toggle"><input type="checkbox" data-lab="hf-spaces" aria-label="Hugging Face Spaces"><span class="abs-labs-track"></span></label>
+              <span class="abs-labs-name">Hugging Face Spaces <a href="https://huggingface.co/docs/hub/spaces" target="_blank" rel="noopener noreferrer">What is this?<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span class="is-sr-only">(opens in new tab)</span></a></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content area (shows placeholder when a toggle is on) -->
+        <div class="abs-labs-content" id="labs-content-area">
+          <div class="abs-labs-empty" id="labs-empty-msg">Toggle a tool on the left to see its content here.</div>
+          <div class="abs-labs-placeholder" data-lab-content="connected-papers">Content for Connected Papers will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="litmaps">Content for Litmaps will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="scite">Content for scite Smart Citations will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="core">Content for CORE Recommender will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="catalyzex">Content for CatalyzeX will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="huggingface">Content for Hugging Face will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="alphaxiv">Content for alphaXiv will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="sciencecast">Content for ScienceCast will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="replicate">Content for Replicate will display here</div>
+          <div class="abs-labs-placeholder" data-lab-content="hf-spaces">Content for Hugging Face Spaces will display here</div>
+        </div>
+      </div>
+
+      <div class="abs-labs-info">
+        <a href="https://info.arxiv.org/labs/index.html" target="_blank" rel="noopener noreferrer">
+          <img src="images/smileybones-labs-small.svg" alt="">
+          What are <span class="arxiv-word"><span aria-hidden="true">arXiv</span><span class="is-sr-only">archive</span></span> Labs?
+          <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span class="is-sr-only">(opens in new tab)</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  UNIVERSAL FOOTER
+═══════════════════════════════════════════════════════════════════════
+  Approved out of abstract-spinout.html. See the COMPONENT block in
+  the <style> above for intent and decisions.
+-->
+
+<footer class="ds-site-footer">
+  <div class="member-footer-callout">
+    <span>Your access to arXiv is supported by <strong>Rheinisch-Westfälische Technische Hochschule Aachen</strong>, an arXiv member institution. Thank you.</span>
+  </div>
+  <div class="ds-site-footer-grid">
+    <div class="ds-site-footer-main">
+      <div class="ds-site-footer-ack">
+        We gratefully acknowledge support from our <strong>major funders</strong>, <a href="#"><strong>member institutions</strong></a><span class="ack-member-inline">, <strong>Rheinisch-Westfälische Technische Hochschule Aachen</strong></span>, and all contributors.
+      </div>
+      <nav class="ds-site-footer-links" aria-label="Site navigation">
+        <a href="https://info.arxiv.org/about">About</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help">Help</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/contact.html">Contact</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/subscribe">Subscribe</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/license/index.html">Copyright</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/policies/privacy_policy.html">Privacy</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/web_accessibility.html">Accessibility</a> <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://status.arxiv.org/" target="_blank" rel="noopener noreferrer">Operational Status</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  BEHAVIORS (JavaScript)
+═══════════════════════════════════════════════════════════════════════
+  One block per behavior. Each block has an intent comment. Vanilla JS
+  for transport-agnostic readability (no React/jQuery/etc.). Each behavior
+  is self-contained — extract or reimplement independently.
+-->
+
+<script>
+
+/* ─────────────────────────────────────────────────────────────────
+   BEHAVIOR: Search overlay (open, close, focus management, Cmd+K)
+   ─────────────────────────────────────────────────────────────────
+   Intent
+     Modal search dialog with focus trap, Esc to close, click-outside
+     to close, Cmd+K / Ctrl+K to open from anywhere.
+   Accessibility
+     Focus moves into the input on open. On close, focus returns to
+     the element that opened it (the "invoker"). Tab cycles within
+     the dialog; Shift+Tab from the first focusable wraps to the last. */
+(function() {
+  var toggle = document.getElementById('search-toggle');
+  var overlay = document.getElementById('search-overlay');
+  var input = document.getElementById('search-input');
+  var invoker = null;
+
+  function openOverlay() {
+    invoker = document.activeElement;
+    overlay.classList.add('is-open');
+    setTimeout(function() { input.focus(); }, 50);
+  }
+  function closeOverlay() {
+    if (!overlay.classList.contains('is-open')) return;
+    overlay.classList.remove('is-open');
+    if (invoker && typeof invoker.focus === 'function') invoker.focus();
+  }
+  function trapFocus(e) {
+    if (e.key !== 'Tab' || !overlay.classList.contains('is-open')) return;
+    var focusable = overlay.querySelectorAll(
+      'input:not([type="hidden"]), button, a[href], [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  toggle.addEventListener('click', function(e) {
+    // The trigger is an <a href="/search"> for no-JS fallback; with JS
+    // running we intercept the navigation and open the overlay instead.
+    e.preventDefault();
+    openOverlay();
+  });
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeOverlay();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeOverlay();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openOverlay();
+    }
+    trapFocus(e);
+  });
+})();
+
+/* ─────────────────────────────────────────────────────────────────
+   BEHAVIOR: Author list (design system Show more, + 100+ scrollable tier)
+   ─────────────────────────────────────────────────────────────────
+   As on the HTML paper: the script hides the tail with the attribute and
+   shows the button, so without JavaScript every author shows.
+
+   100+ tier: the open tail is a bounded scrollable region with a collapse
+   control at both ends, so the reader is never stranded far from the way
+   back. ?authors=many swaps in a generated 1,247-author list to preview it;
+   the names include diacritics, as a non-ASCII rendering check. */
+(function() {
+  var toggle = document.getElementById('authors-toggle');
+  var tail = document.getElementById('authors-overflow');
+  if (!toggle || !tail) return;
+  var total = 22;
+  if (/[?&]authors=many\b/.test(window.location.search)) {
+    var first = ['Lucía','Jonas','Amara','Kenji','Priyanka','Mateus','Ingrid','Tariq','Yuna','Olumide',
+      'Clara','Rafael','Anika','Dmitri','Mei-Ling','Samuel','Elif','Bastien','Nadia','Tomasz','Siobhán',
+      'Arjun','Åsa','Jürgen','François','Penélope','Søren','Zhènyà','Ngozi','Václav','Łukasz','Renée'];
+    var last = ['Ferreyra','Brekke','Osei','Morikawa','Deshmukh','Albuquerque','Solheim','Haddad','Seo',
+      'Adebayo','Weissmann','Quintero','Holmberg','Volkonsky','Chou','Okonkwo','Tanrıverdi','Carrigou',
+      'Rahimi','Wrzosek','Gallagher','Venkataraman','Müller','Gonçalves','Chéreau','Brännvall','Nguyễn',
+      'Öztürk','Žižek','O’Connell','Ibáñez','Þórsson','Šimůnková','Okafor','Srinivasan','Petrov','Lindqvist'];
+    total = 1247;
+    var parts = [];
+    for (var i = 8; i < total; i++) parts.push('<a href="#">' + first[(i * 7) % first.length] + ' ' + last[(i * 13) % last.length] + '</a>');
+    tail.innerHTML = ', ' + parts.join(', ');
+  }
+  var closedLabel = 'show all ' + total.toLocaleString() + ' authors';
+  var scroll = total > 100;
+  toggle.textContent = closedLabel;
+  tail.hidden = true;
+  toggle.hidden = false;
+  if (scroll) {
+    tail.classList.add('abs-authors-scroll');
+    tail.setAttribute('role', 'region');
+    tail.setAttribute('aria-label', 'Full author list');
+    tail.setAttribute('tabindex', '-1');
+    ['afterbegin', 'beforeend'].forEach(function(pos) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ds-show-more';
+      btn.textContent = 'Collapse author list';
+      btn.addEventListener('click', function() { set(false); toggle.focus(); });
+      tail.insertAdjacentElement(pos, btn);
+    });
+  }
+  function set(open) {
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    tail.hidden = !open;
+    tail.classList.toggle('is-open', open);
+    toggle.textContent = open ? toggle.dataset.openLabel : closedLabel;
+  }
+  toggle.addEventListener('click', function() {
+    var open = toggle.getAttribute('aria-expanded') !== 'true';
+    set(open);
+    if (open && scroll) tail.focus();
+  });
+})();
+
+/* ─────────────────────────────────────────────────────────────────
+   BEHAVIOR: Cite, as on the design system's papers page
+   ─────────────────────────────────────────────────────────────────
+   The chosen format is the one shown and copied (copy.js gives each block
+   its copy button). Without this script every format shows in full. */
+document.querySelectorAll('.ds-paper-cite').forEach(function (cite) {
+  var select = cite.querySelector('select');
+  var toggle = cite.querySelector('.ds-show-more');
+  var region = document.getElementById(toggle.getAttribute('aria-controls'));
+  var figures = cite.querySelectorAll('figure[data-format]');
+  function show() { figures.forEach(function (f) { f.hidden = f.dataset.format !== select.value; }); }
+  select.addEventListener('change', show); show();
+  toggle.hidden = false;
+  toggle.addEventListener('click', function () {
+    var open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    region.classList.toggle('is-open', open);
+    toggle.textContent = open ? 'Show less' : 'Show full citation';
+  });
+});
+
+/* ─────────────────────────────────────────────────────────────────
+   BEHAVIOR: Labs toggles (show/hide content)
+   ─────────────────────────────────────────────────────────────────
+   Intent
+     When a Lab toggle is switched on, its content placeholder appears
+     in the right column. When no toggles are on, an empty-state message
+     is shown instead. */
+(function() {
+  var labsEmptyMsg = document.getElementById('labs-empty-msg');
+  function updateLabsEmpty() {
+    var anyVisible = document.querySelector('.abs-labs-placeholder.is-visible');
+    labsEmptyMsg.style.display = anyVisible ? 'none' : 'block';
+  }
+  document.querySelectorAll('.abs-labs-toggle input').forEach(function(input) {
+    input.addEventListener('change', function() {
+      var labName = this.dataset.lab;
+      var placeholder = document.querySelector('[data-lab-content="' + labName + '"]');
+      if (placeholder) placeholder.classList.toggle('is-visible', this.checked);
+      updateLabsEmpty();
+    });
+  });
+})();
+
+</script>
+<script src="https://arxiv.github.io/design-system/docs/copy.js" defer></script>
+<script>
+/* The announcement band's close button hides the band. */
+(function () {
+  var band = document.getElementById('announcement');
+  var close = band && band.querySelector('.ds-close');
+  if (close) close.addEventListener('click', function () { band.hidden = true; });
+})();
+</script>
+</body>
+</html>

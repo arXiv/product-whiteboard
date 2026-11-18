@@ -1,0 +1,22 @@
+/* Overlap report mockup: page-only CSS.
+   What only this page needs. A rule moves into the design system when a
+   second page needs it (DESIGN-POLICIES, New patterns). */
+
+/* Text matched elsewhere in the other paper. The design system's <mark> is the
+   fill and a heavier weight; this second kind keeps the weight and takes a
+   dashed underline in place of the fill, so the two differ by shape as well as
+   color (WCAG 1.4.1). */
+.ds-page mark.match-elsewhere {
+  background: none;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+@media (forced-colors: active) {
+  .ds-page mark.match-elsewhere { background: none; color: CanvasText; }
+}
+
+/* Two texts side by side: the columns stay equal whatever their content, and
+   a long word, such as a URL, wraps inside its cell. */
+.overlap-text { table-layout: fixed; }
+.overlap-text td { overflow-wrap: break-word; }
